@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
 
     Animator animator;
     Rigidbody2D rb2D;
+    
+    public bool FacingRight {
+        get { return facingRight; }
+    }
 
     private void Awake()
     {
