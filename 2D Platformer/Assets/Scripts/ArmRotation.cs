@@ -18,9 +18,6 @@ public class ArmRotation : MonoBehaviour
         diff.Normalize();
         float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
-        if (!playerController.FacingRight)
-            transform.rotation = Quaternion.Euler(0, 0, rotZ + 180f);
-        else
-            transform.rotation = Quaternion.Euler(0, 0, rotZ);
+        transform.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 }

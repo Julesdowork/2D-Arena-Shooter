@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
 
     Animator animator;
     Rigidbody2D rb2D;
-    
+    SpriteRenderer spriteRenderer;
+
     public bool FacingRight {
         get { return facingRight; }
     }
@@ -24,12 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -66,9 +62,7 @@ public class PlayerController : MonoBehaviour
     void Flip()
     {
         facingRight = !facingRight;
-        Vector3 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler;
+        spriteRenderer.flipX = !facingRight;    // by default flipX is false and facingRight is true
     }
 
     void CheckIfGrounded()
