@@ -1,6 +1,9 @@
 ﻿public class TagManager
 {
     // Tags
+    public static string PLAYER = "Player";
+    
+    // Input Tags
     public static string HORIZONTAL = "Horizontal";
     public static string JUMP = "Jump";
     public static string FIRE1 = "Fire1";

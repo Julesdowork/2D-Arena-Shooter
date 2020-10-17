@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 1f;
     [SerializeField] LayerMask whatIsGround;
+    [SerializeField] float fallBoundary = -9f;
 
     bool facingRight = true;
     bool isGrounded;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     Rigidbody2D rb2D;
     SpriteRenderer spriteRenderer;
+
+    PlayerStats playerStats;
 
     public bool FacingRight {
         get { return facingRight; }
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     private void Update()
@@ -33,8 +37,11 @@ public class PlayerController : MonoBehaviour
         Jump();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
+        if (transform.position.y <= fallBoundary)
+            GameManager.instance.KillPlayer();
+
         CheckIfGrounded();
         Move();
     }
