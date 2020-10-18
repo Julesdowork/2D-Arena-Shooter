@@ -2,6 +2,7 @@
 {
     // Tags
     public static string PLAYER = "Player";
+    public static string ENEMY = "Enemy";
     
     // Input Tags
     public static string HORIZONTAL = "Horizontal";

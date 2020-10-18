@@ -26,16 +26,20 @@ public class EnemyAI : MonoBehaviour
 
     // The waypoint we are currently moving towards
     int currentWaypoint = 0;
+    // Should the enemy be searching for a player?
+    bool searchForPlayer;
+    // Wait time between searches for player when none is found
+    float refreshRate = 0.5f;
 
     private void Start()
     {
         seeker = GetComponent<Seeker>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        if (target == null)
+        if (target == null && !searchForPlayer)
         {
-            Debug.LogError("No player found! Panic?!");
-            return;
+            searchForPlayer = true;
+            StartCoroutine(SearchForPlayer());
         }
 
         // Start a new path to the target position, return the result to the OnPathComplete method
@@ -46,10 +50,10 @@ public class EnemyAI : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (target == null)
+        if (target == null && !searchForPlayer)
         {
-            // TODO: Insert a player search here
-            return;
+            searchForPlayer = true;
+            StartCoroutine(SearchForPlayer());
         }
 
         // TODO: Always look at player?
@@ -80,12 +84,29 @@ public class EnemyAI : MonoBehaviour
             currentWaypoint++;
     }
 
+    IEnumerator SearchForPlayer()
+    {
+        GameObject searchResult = GameObject.FindGameObjectWithTag(TagManager.PLAYER);
+        if (searchResult == null)
+        {
+            yield return new WaitForSeconds(refreshRate);
+            StartCoroutine(SearchForPlayer());
+        }
+        else
+        {
+            searchForPlayer = false;
+            target = searchResult.transform;
+            StartCoroutine(UpdatePath());
+            yield break;
+        }
+    }
+
     IEnumerator UpdatePath()
     {
-        if (target == null)
+        if (target == null && !searchForPlayer)
         {
-            // TODO: Insert a player search here
-            yield break;
+            searchForPlayer = true;
+            StartCoroutine(SearchForPlayer());
         }
 
         seeker.StartPath(transform.position, target.position, OnPathComplete);

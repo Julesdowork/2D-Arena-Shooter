@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] Transform bulletTrailPf;
     [SerializeField] Transform muzzleFlashPf;
+    [SerializeField] Transform hitEffectPf;
 
     float timeToFire = 0;
 
@@ -40,18 +41,33 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
-        // Vector3 mousePosV3 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Vector2 mousePos = new Vector2(mousePosV3.x, mousePosV3.y);
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = mousePos - new Vector2(firePoint.position.x, firePoint.position.y);
+        dir.Normalize();
         RaycastHit2D hit = Physics2D.Raycast(firePoint.position, dir, range, hitLayer);
+        Vector3 hitPos;
+        Vector3 hitNormal;
         // Debug.DrawLine(firePoint.position, dir * range, Color.cyan);
-        SpawnBulletTrail();
+        // SpawnBulletTrail();
         MuzzleFlash();
         if (hit.collider != null)
         {
             // Debug.DrawLine(firePoint.position, hit.point, Color.red);
-            // Debug.Log("Fired at " + hit.collider.name + " and did " + damage + " damage");
+            hitPos = hit.point;
+            hitNormal = hit.normal;
+            SpawnHitEffect(hitPos, hitNormal);
+
+            Enemy enemy = hit.collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+        }
+        else
+        {
+            hitPos = dir * range;
+            hitNormal = new Vector3(9999, 9999, 9999);
+            SpawnHitEffect(hitPos, hitNormal);
         }
     }
 
@@ -67,5 +83,22 @@ public class Weapon : MonoBehaviour
         float size = Random.Range(0.3f, 0.45f);
         muzzleFlash.localScale = new Vector3(size, size, size);
         Destroy(muzzleFlash.gameObject, 0.02f);
+    }
+
+    void SpawnHitEffect(Vector3 hitPos, Vector3 hitNormal)
+    {
+        Transform bulletTrail = Instantiate(bulletTrailPf, firePoint.position, Quaternion.identity);
+        LineRenderer lr = bulletTrail.GetComponent<LineRenderer>();
+
+        lr.SetPosition(0, firePoint.position);
+        lr.SetPosition(1, hitPos);
+
+        if (hitNormal != new Vector3(9999, 9999, 9999))
+        {
+            Transform hitEffect = Instantiate(hitEffectPf, hitPos,
+                Quaternion.FromToRotation(Vector3.right, hitNormal));
+        }
+
+        SimpleCamera.instance.ShakeCamera(3f, 0.1f);
     }
 }
