@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Scenes/MainMenu.unity
+    guid: 7ee90d8246079fd4baae8d78d8d5547f
+  - enabled: 1
+    path: Assets/_Scenes/TEST_Battlefield.unity
+    guid: db6d38e4bb7fe944490c3c7079512c7e
+  - enabled: 1
     path: Assets/_Scenes/TEST_Movement.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/_Scenes/TEST_Effects.unity
+    guid: fe9a68a2cda3b8c4ea3502476c447a09
   m_configObjects: {}

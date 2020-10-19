@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource audioSource;
 
     [SerializeField] GameObject gameOverUI;
+    [SerializeField] LivesCounterUI livesCounterUI;
 
     private void Awake()
     {
@@ -35,12 +36,15 @@ public class GameManager : MonoBehaviour
         player =  GameObject.FindGameObjectWithTag(TagManager.PLAYER);
         playerController = player.GetComponent<PlayerController>();
         Lives = 3;
+        livesCounterUI.UpdateLives();
     }
 
     public void KillPlayer()
     {
         player.SetActive(false);
         Lives--;
+        livesCounterUI.UpdateLives();
+
         if (Lives <= 0)
             EndGame();
         else

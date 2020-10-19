@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverUI : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
+    [SerializeField] string mainGameScene = "";
+
     public void QuitGame()
     {
         Application.Quit();
@@ -14,5 +16,10 @@ public class GameOverUI : MonoBehaviour
     public void RetryLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(mainGameScene);
     }
 }

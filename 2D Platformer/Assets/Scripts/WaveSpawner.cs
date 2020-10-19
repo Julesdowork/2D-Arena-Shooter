@@ -21,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
     // A collection of waves this level contains
     [SerializeField] Wave[] waves;
     // The time it takes for a new wave to begin once the old one is finished
-    [SerializeField] float timeBetweenWaves = 5f;
+    [SerializeField] float timeBetweenWaves = 3f;
     [SerializeField] Transform[] spawnPoints;
 
     int nextWave = 0;
