@@ -139,6 +139,8 @@ MonoBehaviour:
   currentHealth: 0
   healthBarRect: {fileID: 0}
   healthText: {fileID: 0}
+  deathSfx: PlayerDeath
+  hurtSfx: Grunt
 --- !u!1 &4708335678772137152
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +455,7 @@ MonoBehaviour:
   bulletTrailPf: {fileID: 8121287720642325401, guid: 86274151a98871b4ea85d9024abd458e, type: 3}
   muzzleFlashPf: {fileID: 7296431783553937490, guid: 3470f3760a566f44382e114ef586a90c, type: 3}
   hitEffectPf: {fileID: 139911752534240058, guid: 06b0fd4cccf6d6b458a776dadcff4700, type: 3}
+  shootSfx: DefaultShot
 --- !u!1 &4708335680103637450
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (transform.position.y <= fallBoundary)
-            GameManager.instance.KillPlayer();
+            playerStats.DamagePlayer(Mathf.Infinity);
 
         CheckIfGrounded();
         Move();

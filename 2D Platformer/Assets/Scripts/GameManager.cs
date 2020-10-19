@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     GameObject player;
     PlayerController playerController;
 
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] string respawnSfx = "Respawn";
+    [SerializeField] string respawnCountdownSfx = "RespawnCountdown";
+    [SerializeField] string gameOverSfx = "GameOver";
 
     [SerializeField] GameObject gameOverUI;
     [SerializeField] LivesCounterUI livesCounterUI;
@@ -53,17 +55,19 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RespawnPlayer()
     {
+        AudioManager.instance.PlaySound(respawnCountdownSfx);
         yield return new WaitForSeconds(spawnPlayerDelay);
 
         player.transform.position = playerSpawnPoint.position;
         player.SetActive(true);
 
         Instantiate(spawnPlayerPf, playerSpawnPoint.position, Quaternion.identity);
-        audioSource.Play();
+        AudioManager.instance.PlaySound(respawnSfx);
     }
 
     void EndGame()
     {
+        AudioManager.instance.PlaySound(gameOverSfx);
         gameOverUI.SetActive(true);
     }
 }

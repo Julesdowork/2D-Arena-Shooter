@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] RectTransform healthBarRect;
     [SerializeField] Transform deathEffectPf;
+    [SerializeField] string deathSfx = "Explosion";
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +51,7 @@ public class Enemy : MonoBehaviour
 
     public void KillEnemy()
     {
+        AudioManager.instance.PlaySound(deathSfx);
         Instantiate(deathEffectPf, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

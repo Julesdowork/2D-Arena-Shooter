@@ -12,6 +12,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] Transform bulletTrailPf;
     [SerializeField] Transform muzzleFlashPf;
     [SerializeField] Transform hitEffectPf;
+    [SerializeField] string shootSfx = "DefaultShot";
 
     float timeToFire = 0;
 
@@ -48,7 +49,7 @@ public class Weapon : MonoBehaviour
         Vector3 hitPos;
         Vector3 hitNormal;
         // Debug.DrawLine(firePoint.position, dir * range, Color.cyan);
-        // SpawnBulletTrail();
+        AudioManager.instance.PlaySound(shootSfx);
         MuzzleFlash();
         if (hit.collider != null)
         {
