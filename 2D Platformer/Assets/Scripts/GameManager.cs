@@ -12,10 +12,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] float spawnPlayerDelay = 4f;
     [SerializeField] GameObject spawnPlayerPf;
 
+    public int Lives { get; private set; }
+
     GameObject player;
     PlayerController playerController;
 
     [SerializeField] AudioSource audioSource;
+
+    [SerializeField] GameObject gameOverUI;
 
     private void Awake()
     {
@@ -30,13 +34,17 @@ public class GameManager : MonoBehaviour
     {
         player =  GameObject.FindGameObjectWithTag(TagManager.PLAYER);
         playerController = player.GetComponent<PlayerController>();
+        Lives = 3;
     }
 
     public void KillPlayer()
     {
-        Debug.Log("You died!!!");
         player.SetActive(false);
-        StartCoroutine(RespawnPlayer());
+        Lives--;
+        if (Lives <= 0)
+            EndGame();
+        else
+            StartCoroutine(RespawnPlayer());
     }
 
     public IEnumerator RespawnPlayer()
@@ -48,5 +56,10 @@ public class GameManager : MonoBehaviour
 
         Instantiate(spawnPlayerPf, playerSpawnPoint.position, Quaternion.identity);
         audioSource.Play();
+    }
+
+    void EndGame()
+    {
+        gameOverUI.SetActive(true);
     }
 }
