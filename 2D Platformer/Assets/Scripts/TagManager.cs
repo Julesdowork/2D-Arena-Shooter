@@ -12,4 +12,6 @@
     // Animation Parameters
     public static string SPEED_PARAM = "Speed";
     public static string IS_GROUNDED_PARAM = "IsGrounded";
+    public static string WAVE_INCOMING = "WaveIncoming";
+    public static string WAVE_COUNTDOWN = "WaveCountdown";
 }

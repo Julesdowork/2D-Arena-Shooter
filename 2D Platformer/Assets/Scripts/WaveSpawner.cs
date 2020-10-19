@@ -16,7 +16,7 @@ public class WaveSpawner : MonoBehaviour
     // Spawning = this wave's enemies are spawning
     // Waiting = waiting for all the enemies in this wave to be destroyed
     // Counting = counting down to the start of the next wave
-    enum SpawnState { Spawning, Waiting, Counting };
+    public enum SpawnState { Spawning, Waiting, Counting };
 
     // A collection of waves this level contains
     [SerializeField] Wave[] waves;
@@ -28,6 +28,21 @@ public class WaveSpawner : MonoBehaviour
     SpawnState spawnState = SpawnState.Counting;
     float searchCountdown = 1f;
     float waveCountdown;
+
+    public SpawnState State
+    {
+        get { return spawnState; }
+    }
+
+    public float WaveCountdown
+    {
+        get { return waveCountdown; }
+    }
+
+    public int NextWave
+    {
+        get { return nextWave + 1; }
+    }
 
     // Start is called before the first frame update
     void Start()
